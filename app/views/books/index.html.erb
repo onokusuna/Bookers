@@ -1,0 +1,63 @@
+<!-- あとでCSS -->
+<h2>
+	<strong>Books</strong><!-- cssで太文字にする -->
+</h2>
+<!-- tableタグ使ってリストを作成 -->
+<table>
+<thead>
+<!-- 3つのカラムに分割 -->
+<tr>
+<th>
+	<strong>Title</strong><!-- cssで太文字にする -->
+</th>
+<th>
+	<strong>Body</strong><!-- cssで太文字にする -->
+</th>
+<th></th><!-- タイトルなし -->
+</tr>
+</thead>
+
+<tbody>
+<!-- eachメソッド -->
+<% @books.each do |book| %><!-- ctrlの@books=Book.allより引用するので@は複数形 -->
+<% @books.order("id") %><!-- orderメソッドでid順に並べ替え -->
+<tr>
+<!-- セル１ -->
+<td>
+<%= book.title %>
+</td>
+<!-- セル２ -->
+<td>
+<%= book.body %>
+</td>
+<!-- セル３ -->
+<td>
+<%= link_to "Show", book_path(book) %><!-- ここの引数は@いらない eachの|book|が関係-->
+<%= link_to "Edit", edit_book_path(book) %>
+<%= link_to "Destroy", book_path(book), method: :delete, "data-confirm" => "本当に削除しますか？" %> <!--デリート時に文章を表示 リソースをshowに設定してそのリソースをdelete-->
+</td>
+</tr>
+<% end %><!-- eachメソッドのエンド忘れない！ -->
+</tbody>
+</table>
+
+
+<!-- 以下、新規投稿部分 -->
+<h3>
+	<strong>New book</strong><!-- cssで太文字にする -->
+</h3>
+<!-- form_for部分 -->
+<% @book.errors.full_messages.each do |message| %><!-- 複数のメッセージが格納されていることもあるので、全て表示するには each でループで回しましょう。 -->
+ <%= message %>
+<% end %>
+<%= form_for(@book) do |f| %> <!-- 最後にエンド -->
+<!-- バリデーションとエラーメッセージ追記 -->
+<!-- 全てのエラーメッセージを配列で取得します。 -->
+	<h4>Title</h4>
+	<%= f.text_field :title %>
+
+	<h4>Body</h4>
+	<%= f.text_area :body %>
+
+	<p><%= f.submit 'Create Book' %></p> <!-- .erb submit=提示する -->
+<% end %>

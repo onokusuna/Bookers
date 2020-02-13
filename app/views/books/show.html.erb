@@ -1,0 +1,22 @@
+<!-- 詳細ページ -->
+<!-- サクセスメッセージの表示 -->
+<% if flash[:notice] %><!-- flash[:notice]にメッセージが入っている場合のみ、それを出力する -->
+  <p><%= flash[:notice] %></p><!-- cssで色を緑に変更 -->
+<% end %>
+
+<p>
+	<strong>Title: </strong><!-- cssで太文字にする -->
+	<%= @book.title %>
+</p>
+<p>
+	<strong>Body: </strong><!-- cssで太文字にする -->
+	<%= @book.body %>
+</p>
+
+<!-- Editリンク -->
+<p>
+	<%= link_to "Edit", edit_book_path(@book)%><!-- ここのパスは@必要 vieｗに引き渡しているから show -->
+	｜
+<!-- Backリンク -->
+	<%= link_to "Back", books_path%>
+</p>
